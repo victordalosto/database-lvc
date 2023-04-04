@@ -1,0 +1,20 @@
+SELECT distinct on (trecho.id_trecho)
+	   trecho.nm_uf, 
+	   trecho.nm_br, 
+	   trecho.id_trecho, 
+	   logs.hodometro_trecho, 
+	   trecho.km_inicial,
+	   trecho.km_final,
+	   t.nm_tipo_ocorrencia, 
+	   d.nm_detalhe_ocorrencia
+	FROM tb_ocorrencia_log o
+		LEFT JOIN tb_log logs on logs.id_log = o.id_log
+		LEFT JOIN tb_trecho trecho on trecho.id_trecho = logs.id_trecho
+		LEFT JOIN tb_tipo_ocorrencia t on t.id_tipo_ocorrencia = o.id_tipo_ocorrencia
+		LEFT JOIN tb_detalhe_ocorrencia d on d.id_detalhe_ocorrencia = o.id_detalhe_ocorrencia
+	WHERE
+		t.id_tipo_ocorrencia IN (50, 54)
+		AND trecho.nm_uf = 'RO'
+		AND trecho.nm_br = '364'
+		AND trecho.id_ciclo = 8
+;

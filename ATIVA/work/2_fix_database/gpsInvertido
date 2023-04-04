@@ -1,0 +1,6 @@
+UPDATE tb_log
+SET
+    gps_x = gps_y,
+    gps_y = gps_x
+WHERE
+    id_trecho >= 9974;

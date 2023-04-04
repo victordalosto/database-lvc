@@ -1,0 +1,23 @@
+tb_trecho
+  importante: id_trecho, nm_trecho, nm_uf, nm_br, km_inicial, km_final
+  tem: id_trecho, id_ciclo, id_lote, nm_trecho, dt_levantamento, nm_uf, nm_br, desc_pista, desc_sentido, desc_faixa, km_inicial, km_final, dt_upload, desc_caminho, id_tp_trecho, publicado, geo, cod_trecho
+
+
+tb_log
+  importante: id_log, id_trecho, hodometro_trecho, gps_y, gps_x, gps_altitude, iri_interno, iri_externo, flecha_int, flecha_ext, data_hora
+  tem: id_log, id_trecho, velocidade, hodometro_trecho, gps_velocidade, gps_hodometro, gps_latitude, gps_longitude, gps_altitude, gps_erro, gps_qtde_satelites, gps_y, gps_x, gps_azimute, gps_nmea_gprmc, gps_nmea_gpgga, frame_camera_1, frame_camera_2, tempo_camera_1, tempo_camera_2, data_hora, tempo_log, barometro_pressao, barometro_temperatura, barometro_altitude, iri_interno, iri_externo, extensao_log, perimetro_urbano, sinalizacao_vert_direita, sinalizacao_vert_esquerda, acesso_direita, acesso_esquerda, tipo_revestimento, id_log_original, odometro, flecha_int, flecha_ext, cod_log
+
+
+tb_ocorrencia_log
+  importante: id_log, id_tipo_ocorrencia, id_detalhe_ocorrencia
+  tem: id_log, id_tipo_ocorrencia, id_detalhe_ocorrencia
+
+
+tb_tipo_ocorrencia
+  importante: id_tipo_ocorrencia, nm_tipo_ocorrencia
+  tem: id_tipo_ocorrencia, id_grupo, nm_tipo_ocorrencia, desc_tecla_atalho, icone, ordem, visivel
+
+
+tb_detalhe_ocorrencia
+  importante: id_detalhe_ocorrencia, nm_detalhe_ocorrencia
+  tem: id_detalhe_ocorrencia, id_tipo_ocorrencia, nm_detalhe_ocorrencia

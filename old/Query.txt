@@ -1,0 +1,12 @@
+
+-- QUERY TRECHOS ABERTOS
+SELECT id_trecho, nm_trecho, nm_uf, nm_br, 
+       dt_inicio, nm_login, nm_ciclo
+    FROM tb_status 
+    NATURAL JOIN tb_ciclo
+    NATURAL JOIN tb_usuario
+    NATURAL JOIN tb_grupo
+    NATURAL JOIN tb_trecho
+    WHERE nm_ciclo = 'Ciclo 2021'
+    AND nm_grupo = 'pavimento'
+    AND dt_final ISNULl;
