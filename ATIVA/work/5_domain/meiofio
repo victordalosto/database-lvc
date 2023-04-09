@@ -1,10 +1,8 @@
-DROP TABLE IF EXISTS faixas;
-CREATE TABLE faixas (
+DROP TABLE IF EXISTS meiofio;
+CREATE TABLE meiofio (
 	id integer primary key,
 	nome char(20),
 	condicao char(20),
-	condicao_eixo char(20),
-	condicao_borda char(20),
 	lado char(20),
 	km integer,
 	sentido char(1),
@@ -14,38 +12,22 @@ CREATE TABLE faixas (
 	br char(3)
 );
 
-CREATE INDEX index_faixas_id ON faixas USING btree (id ASC NULLS LAST);
-CREATE INDEX index_faixas_nome ON faixas USING btree (nome ASC NULLS LAST);
-CREATE INDEX index_faixas_condicao ON faixas USING btree (condicao ASC NULLS LAST);
-CREATE INDEX index_faixas_condicao_eixo ON faixas USING btree (condicao_eixo ASC NULLS LAST);
-CREATE INDEX index_faixas_condicao_borda ON faixas USING btree (condicao_borda ASC NULLS LAST);
-CREATE INDEX index_faixas_lado ON faixas USING btree (lado ASC NULLS LAST);
-CREATE INDEX index_faixas_uf ON faixas USING btree (uf ASC NULLS LAST);
-CREATE INDEX index_faixas_br ON faixas USING btree (br ASC NULLS LAST);
-CREATE INDEX index_faixas_sentido ON faixas USING btree (sentido ASC NULLS LAST);
-CREATE INDEX index_faixas_km ON faixas USING btree (km ASC NULLS LAST);
-CREATE INDEX index_faixas_gps_y ON faixas USING btree (gps_y ASC NULLS LAST);
-CREATE INDEX index_faixas_gps_x ON faixas USING btree (gps_x ASC NULLS LAST);
+CREATE INDEX index_meiofio_id ON meiofio USING btree (id ASC NULLS LAST);
+CREATE INDEX index_meiofio_condicao ON meiofio USING btree (condicao ASC NULLS LAST);
+CREATE INDEX index_meiofio_lado ON meiofio USING btree (lado ASC NULLS LAST);
+CREATE INDEX index_meiofio_uf ON meiofio USING btree (uf ASC NULLS LAST);
+CREATE INDEX index_meiofio_br ON meiofio USING btree (br ASC NULLS LAST);
+CREATE INDEX index_meiofio_sentido ON meiofio USING btree (sentido ASC NULLS LAST);
+CREATE INDEX index_meiofio_km ON meiofio USING btree (km ASC NULLS LAST);
+CREATE INDEX index_meiofio_gps_y ON meiofio USING btree (gps_y ASC NULLS LAST);
+CREATE INDEX index_meiofio_gps_x ON meiofio USING btree (gps_x ASC NULLS LAST);
 
-
-UPDATE faixas SET condicao =
-  CASE
-    WHEN condicao_eixo IS NULL AND condicao_borda IS NULL THEN NULL
-    WHEN condicao_eixo = 'RUIM' OR condicao_borda = 'RUIM' THEN 'RUIM'
-    WHEN condicao_eixo = 'REGULAR' OR condicao_borda = 'REGULAR' THEN 'REGULAR'
-    ELSE 'BOA'
-  END
-;
-
-
-INSERT into faixas
+INSERT into meiofio
 SELECT 
     id,
-    nome,
-    null as condicao,
-	condicao_eixo,
-	condicao_borda,
-	null as lado,
+    'meiofio' as nome,
+    condicao,
+	lado,
 	logs.hodometro_trecho as km,
     trecho.desc_sentido as sentido,
     logs.gps_y, 
@@ -56,21 +38,19 @@ FROM
 (
     SELECT 
         id_log id, 
-	    MAX(nome) AS nome, 
-	    MAX(condicao_eixo) AS condicao_eixo,
-	    MAX(condicao_borda) AS condicao_borda
+	    MAX(condicao) AS condicao,
+	    MAX(lado) AS lado
 	FROM (
 		SELECT  
 			o.id_log id_log, 
-			MAX(CASE WHEN det.id_detalhe_ocorrencia IN (55, 56, 666) THEN det.nm_detalhe_ocorrencia END) AS nome,
-			MAX(CASE WHEN det.id_detalhe_ocorrencia IN (26, 27, 45, 666) THEN det.nm_detalhe_ocorrencia END) AS condicao_eixo,
-			MAX(CASE WHEN det.id_detalhe_ocorrencia IN (28, 29, 51, 666) THEN det.nm_detalhe_ocorrencia END) AS condicao_borda
+			MAX(CASE WHEN det.id_detalhe_ocorrencia IN (76, 77, 78, 666) THEN det.nm_detalhe_ocorrencia END) AS condicao,
+			MAX(CASE WHEN det.id_detalhe_ocorrencia IN (79, 80, 81, 666) THEN det.nm_detalhe_ocorrencia END) AS lado
 		FROM 
 			tb_ocorrencia_log o
 			LEFT JOIN tb_tipo_ocorrencia tipo on tipo.id_tipo_ocorrencia = o.id_tipo_ocorrencia
 			LEFT JOIN tb_detalhe_ocorrencia det on det.id_detalhe_ocorrencia = o.id_detalhe_ocorrencia
 		WHERE
-			o.id_tipo_ocorrencia IN (46, 47, 63)
+			o.id_tipo_ocorrencia IN (74, 75)
         GROUP BY 
             o.id_log, o.id_tipo_ocorrencia
         ) queryBuscarDadosEspalhados

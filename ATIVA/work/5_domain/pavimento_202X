@@ -1,4 +1,8 @@
-DROP TABLE IF EXISTS pavimento_2022;
+-- 2022 = 32511050+257807
+-- 2021 = 48874722
+-- 2020 = 34657213
+
+DROP TABLE IF EXISTS pavimento_2022; 
 CREATE TABLE pavimento_2022 (
 	id integer primary key,
 	nome char(20),
