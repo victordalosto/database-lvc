@@ -1,0 +1,69 @@
+UPDATE tb_ocorrencia_log
+SET id_detalhe_ocorrencia = NULL
+WHERE id_tipo_ocorrencia IN (3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 33, 34, 36, 37, 44, 51, 52, 53, 61, 64)
+AND id_detalhe_ocorrencia IN (65, 67);
+	
+UPDATE tb_ocorrencia_log
+SET id_detalhe_ocorrencia = 26
+WHERE id_tipo_ocorrencia = 46
+AND id_detalhe_ocorrencia IN (65, 67, NULL);
+
+UPDATE tb_ocorrencia_log
+SET id_detalhe_ocorrencia = 28
+WHERE id_tipo_ocorrencia = 47
+AND id_detalhe_ocorrencia IN (65, 67, NULL);
+
+UPDATE tb_ocorrencia_log
+SET id_detalhe_ocorrencia = 30
+WHERE id_tipo_ocorrencia = 48
+AND id_detalhe_ocorrencia IN (65, 67, NULL);
+	
+UPDATE tb_ocorrencia_log
+SET id_detalhe_ocorrencia = 666
+WHERE id_tipo_ocorrencia = 49
+AND id_detalhe_ocorrencia IN (65, 67, NULL);
+
+UPDATE tb_ocorrencia_log
+SET id_detalhe_ocorrencia = 39
+WHERE id_tipo_ocorrencia = 50
+AND id_detalhe_ocorrencia IN (65, 67, NULL);
+
+UPDATE tb_ocorrencia_log
+SET id_detalhe_ocorrencia = 50
+WHERE id_tipo_ocorrencia = 54
+AND id_detalhe_ocorrencia IN (65, 67, NULL);
+
+UPDATE tb_ocorrencia_log
+SET id_detalhe_ocorrencia = 52
+WHERE id_tipo_ocorrencia = 55
+AND id_detalhe_ocorrencia IN (65, 67, NULL);
+
+UPDATE tb_ocorrencia_log
+SET id_detalhe_ocorrencia = 56
+WHERE id_tipo_ocorrencia = 63
+AND id_detalhe_ocorrencia IN (65, 67, NULL);
+
+UPDATE tb_ocorrencia_log
+SET id_detalhe_ocorrencia = 63
+WHERE id_tipo_ocorrencia = 67
+AND id_detalhe_ocorrencia IN (65, 67, NULL);
+
+UPDATE tb_ocorrencia_log
+SET id_detalhe_ocorrencia = 65
+WHERE id_tipo_ocorrencia = 68
+AND id_detalhe_ocorrencia IN (65, 67, NULL);
+
+UPDATE tb_ocorrencia_log
+SET id_detalhe_ocorrencia = 68
+WHERE id_tipo_ocorrencia = 69
+AND id_detalhe_ocorrencia IN (65, 67, NULL);
+
+UPDATE tb_ocorrencia_log
+SET id_detalhe_ocorrencia = 101
+WHERE id_tipo_ocorrencia = 82
+AND id_detalhe_ocorrencia IN (65, 67, NULL);
+
+UPDATE tb_ocorrencia_log
+SET id_detalhe_ocorrencia = 665
+WHERE id_tipo_ocorrencia = 84
+AND id_detalhe_ocorrencia IN (65, 67, NULL);

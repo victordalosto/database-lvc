@@ -1,5 +1,5 @@
 -- PLACAS VERTICAIS
-SELECT id_log, 
+SELECT id_log id, 
 	   MAX(tipo) AS nome, 
 	   MAX(estado) AS condicao
 	FROM (
@@ -22,15 +22,15 @@ GROUP BY id_log
 
 -- DISPOSITIVOS DE SEGURANCA
 SELECT id_log, 
-	   MAX(tipo) AS nome, 
+	   MAX(nome) AS nome, 
 	   MAX(estado) AS condicao,
 	   MAX(defeitos) AS defeito
 	FROM (
 		SELECT  
 			o.id_log id_log, 
 			MAX(CASE WHEN det.id_detalhe_ocorrencia IN (39, 40, 41, 43, 46, 47) THEN det.nm_detalhe_ocorrencia END) AS tipo,
-			MAX(CASE WHEN det.id_detalhe_ocorrencia IN (48, 49, 50) THEN det.nm_detalhe_ocorrencia END) AS estado,
-			MAX(CASE WHEN det.id_detalhe_ocorrencia IN (51) THEN det.nm_detalhe_ocorrencia END) AS defeitos
+			MAX(CASE WHEN det.id_detalhe_ocorrencia IN (51) THEN det.nm_detalhe_ocorrencia END) AS defeitos,
+			MAX(CASE WHEN det.id_detalhe_ocorrencia IN (48, 49, 50) THEN det.nm_detalhe_ocorrencia END) AS estado
 		FROM 
 			tb_ocorrencia_log o
 			LEFT JOIN tb_tipo_ocorrencia tipo on tipo.id_tipo_ocorrencia = o.id_tipo_ocorrencia
@@ -39,6 +39,7 @@ SELECT id_log,
 			o.id_tipo_ocorrencia IN (50, 51, 54)
         GROUP BY 
             o.id_log, o.id_tipo_ocorrencia
+		LIMIT 10
 	) queryDispositivosDeSeguranca
 GROUP BY id_log
 

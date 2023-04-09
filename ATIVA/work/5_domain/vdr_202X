@@ -1,0 +1,54 @@
+-- COPIA OS DADOS BRUTOS DO LEVANTAMENTO LVC PARA O CACHE DE DADOS BRUTOS
+DROP TABLE IF EXISTS vdr_202X;
+CREATE TABLE IF NOT EXISTS vdr_202X (
+    id integer PRIMARY KEY,
+    trecho CHAR(15),
+    uf CHAR(2),
+    br CHAR(3),
+    sentido CHAR(1),
+    km integer,
+    velocidade double precision,
+    gps_y double precision,
+    gps_x double precision,
+    gps_altitude double precision,
+    iri_interno double precision,
+    iri_externo double precision,
+    flecha_interna double precision,
+    flecha_externa double precision,
+    data_hora timestamp with time zone
+);
+
+
+CREATE INDEX index_vdr202X_id ON vdr_202X USING btree (id ASC NULLS LAST);
+CREATE INDEX index_vdr202X_trecho ON vdr_202X USING btree (trecho ASC NULLS LAST);
+CREATE INDEX index_vdr202X_uf ON vdr_202X USING btree (uf ASC NULLS LAST);
+CREATE INDEX index_vdr202X_br ON vdr_202X USING btree (br ASC NULLS LAST);
+CREATE INDEX index_vdr202X_sentido ON vdr_202X USING btree (sentido ASC NULLS LAST);
+CREATE INDEX index_vdr202X_km ON vdr_202X USING btree (km ASC NULLS LAST);
+CREATE INDEX index_vdr202X_gps_y ON vdr_202X USING btree (gps_y ASC NULLS LAST);
+CREATE INDEX index_vdr202X_gps_x ON vdr_202X USING btree (gps_x ASC NULLS LAST);
+
+
+
+
+INSERT INTO vdr_202X
+SELECT
+    logs.id_log, 
+    trecho.nm_trecho,
+    trecho.nm_uf,
+    trecho.nm_br,
+    trecho.desc_sentido,
+    logs.hodometro_trecho,
+    logs.velocidade, 
+    logs.gps_y, 
+    logs.gps_x, 
+    logs.gps_altitude, 
+    logs.iri_interno, 
+    logs.iri_externo, 
+    logs.flecha_int, 
+    logs.flecha_ext, 
+    logs.data_hora
+FROM 
+    tb_log logs
+    LEFT JOIN tb_trecho trecho on logs.id_trecho = trecho.id_trecho
+    WHERE trecho.id_trecho in ()

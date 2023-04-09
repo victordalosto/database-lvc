@@ -1,11 +1,9 @@
 -- COPIA OS DADOS BRUTOS DO LEVANTAMENTO LVC PARA O CACHE DE MARCACOES
 DROP TABLE IF EXISTS cache_sinalizacao;
 CREATE TABLE IF NOT EXISTS cache_sinalizacao (
-    id_log integer
+    id_log integer,
     id_tipo_ocorrencia smallint,
-    nm_tipo_ocorrencia CHAR(20),
-    id_detalhe_ocorrencia smallint,
-    nm_detalhe_ocorrencia CHAR(20)
+    id_detalhe_ocorrencia smallint
 );
 
 
@@ -19,7 +17,6 @@ SELECT
 FROM 
     tb_ocorrencia_log o
     LEFT JOIN tb_tipo_ocorrencia tipo on tipo.id_tipo_ocorrencia = o.id_tipo_ocorrencia
-    LEFT JOIN tb_detalhe_ocorrencia det on det.id_detalhe_ocorrencia = o.id_detalhe_ocorrencia
 WHERE
     tipo.id_tipo_ocorrencia in (
         33, -- lombada
