@@ -1,0 +1,15 @@
+SELECT t.id_Trecho, t.id_grupo, t.dt_final
+	FROM tb_status t
+	WHERE t.id_trecho in 
+        ()
+	AND (
+			t.id_trecho not in (
+				SELECT s.id_trecho 
+				FROM tb_status s 
+				WHERE id_grupo = 9
+			) 
+		OR
+			(t.id_grupo = 9 AND dt_final ISNULL)
+		)
+	ORDER BY t.id_trecho
+;

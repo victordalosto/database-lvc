@@ -1,0 +1,8 @@
+UPDATE tb_ocorrencia_log
+SET id_detalhe_ocorrencia = NULL
+WHERE id_tipo_ocorrencia IN (3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 33, 34, 36, 37, 44, 51, 52, 53, 61, 64)
+AND id_detalhe_ocorrencia IN (65, 67);
+
+-- Demais:
+Criar um novo detalhe com tipo 'N/A'
+Atribuir as marcoes inconsistentes para esse novo detalhe

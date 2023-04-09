@@ -1,0 +1,1 @@
+Rotinas que foram realizadas para criar cada uma das tables do banco de dados.

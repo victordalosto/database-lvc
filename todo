@@ -1,0 +1,10 @@
+exportar:
+    antigo_placa
+    antigo_acostamento
+    antigo_defensa
+
+encontrar:
+    locais errados de placas e substituir por antigo_*
+
+arrumar:
+    pavimento so tem 40k km exportados, só o ciclo 2 esta certo ??

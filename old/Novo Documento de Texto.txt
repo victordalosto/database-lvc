@@ -1,1 +1,0 @@
-"SgpDbConnection": "Server=10.100.11.127;Port=5432;Database=db_sgp;User Id=postgres;Password=DDhqr5pwTKOy4HGmcO64;Persist Security Info=True",

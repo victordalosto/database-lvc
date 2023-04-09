@@ -1,0 +1,1 @@
+Algumas minor fixes realizadas no banco
