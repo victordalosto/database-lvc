@@ -1,6 +1,6 @@
 <h1><strong>Banco de dados LVC</strong></h1>
 
-Este é um repositório contendo as rotinas realizadas para criar o banco de dados LVC, utilizado para consulta no <strong>DNIT - Departamento Nacional de Infraestrutura e Transporte</strong>.
+Este é um repositório contendo as rotinas realizadas para criar o banco de dados LVC, utilizado para consultas de ativos no <strong>DNIT - Departamento Nacional de Infraestrutura e Transporte</strong>.
 
 <br/>
 
