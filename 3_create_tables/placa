@@ -13,15 +13,15 @@ CREATE TABLE placa (
 );
 
 
-CREATE INDEX index_placa_id ON placa USING btree (id ASC NULLS LAST);
-CREATE INDEX index_placa_nome ON placa USING btree (nome ASC NULLS LAST);
-CREATE INDEX index_placa_condicao ON placa USING btree (condicao ASC NULLS LAST);
-CREATE INDEX index_placa_uf ON placa USING btree (uf ASC NULLS LAST);
-CREATE INDEX index_placa_br ON placa USING btree (br ASC NULLS LAST);
-CREATE INDEX index_placa_sentido ON placa USING btree (sentido ASC NULLS LAST);
-CREATE INDEX index_placa_km ON placa USING btree (km ASC NULLS LAST);
-CREATE INDEX index_placa_gps_y ON placa USING btree (gps_y ASC NULLS LAST);
-CREATE INDEX index_placa_gps_x ON placa USING btree (gps_x ASC NULLS LAST);
+CREATE INDEX index_antigo_placa_id ON antigo_placa USING btree (id ASC NULLS LAST);
+CREATE INDEX index_antigo_placa_nome ON antigo_placa USING btree (nome ASC NULLS LAST);
+CREATE INDEX index_antigo_placa_condicao ON antigo_placa USING btree (condicao ASC NULLS LAST);
+CREATE INDEX index_antigo_placa_uf ON antigo_placa USING btree (uf ASC NULLS LAST);
+CREATE INDEX index_antigo_placa_br ON antigo_placa USING btree (br ASC NULLS LAST);
+CREATE INDEX index_antigo_placa_sentido ON antigo_placa USING btree (sentido ASC NULLS LAST);
+CREATE INDEX index_antigo_placa_km ON antigo_placa USING btree (km ASC NULLS LAST);
+CREATE INDEX index_antigo_placa_gps_y ON antigo_placa USING btree (gps_y ASC NULLS LAST);
+CREATE INDEX index_antigo_placa_gps_x ON antigo_placa USING btree (gps_x ASC NULLS LAST);
 
 
 

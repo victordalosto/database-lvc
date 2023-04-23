@@ -1,11 +1,12 @@
-{
+[
+  {
     "id": "integer",
     "dados": [
-        {
-            "nome": "char(20)",
-            "condicao": "char(20)",
-            "lado": "char(20)"
-        }
+      {
+        "nome": "char(20)",
+        "condicao": "char(20)",
+        "lado": "char(20)"
+      }
     ],
     "km": "integer",
     "sentido": "char(1)",
@@ -13,4 +14,5 @@
     "gps_x": "double precision",
     "uf": "char(3)",
     "br": "char(2)"
-}
+  }
+]

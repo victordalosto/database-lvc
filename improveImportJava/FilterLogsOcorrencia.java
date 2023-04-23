@@ -7,7 +7,6 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
 public class FilterLogsOcorrencia {
 
     static Path pathAntigo = Paths.get("D:", "banco", "tb_ocorrencia_log_export.csv");
