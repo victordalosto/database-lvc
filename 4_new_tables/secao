@@ -1,0 +1,71 @@
+DROP TABLE IF EXISTS secao;
+CREATE TABLE secao (
+	id integer primary key,
+	nome char(20),
+	condicao char(20),
+	lado char(20),
+	lado_esquerdo char(20),
+	lado_direito char(20),
+	km integer,
+	sentido char(1),
+	gps_y double precision,
+	gps_x double precision,
+	uf char(2),
+	br char(3)
+);
+
+CREATE INDEX index_secao_id ON secao USING btree (id ASC NULLS LAST);
+CREATE INDEX index_secao_nome ON secao USING btree (nome ASC NULLS LAST);
+CREATE INDEX index_secao_condicao ON secao USING btree (condicao ASC NULLS LAST);
+CREATE INDEX index_secao_lado ON secao USING btree (lado ASC NULLS LAST);
+CREATE INDEX index_secao_uf ON secao USING btree (uf ASC NULLS LAST);
+CREATE INDEX index_secao_br ON secao USING btree (br ASC NULLS LAST);
+CREATE INDEX index_secao_sentido ON secao USING btree (sentido ASC NULLS LAST);
+CREATE INDEX index_secao_km ON secao USING btree (km ASC NULLS LAST);
+CREATE INDEX index_secao_gps_y ON secao USING btree (gps_y ASC NULLS LAST);
+CREATE INDEX index_secao_gps_x ON secao USING btree (gps_x ASC NULLS LAST);
+
+INSERT into secao
+SELECT 
+    id,
+    nome,
+    condicao,
+	lado,
+	lado_esquerdo,
+	lado_direito,
+	logs.hodometro_trecho as km,
+    trecho.desc_sentido as sentido,
+    logs.gps_y, 
+    logs.gps_x,
+    trecho.nm_uf as uf,
+    trecho.nm_br as br
+FROM 
+(
+    SELECT 
+        id_log id, 
+	    MAX(nome) AS nome, 
+	    MAX(condicao) AS condicao,
+	    MAX(lado) AS lado,
+		MAX(lado_direito) as lado_direito,
+		MAX(lado_esquerdo) as lado_esquerdo
+	FROM (
+		SELECT  
+			o.id_log id_log,
+			'secao' AS nome,
+			null AS condicao,
+			null AS lado,
+			MAX(CASE WHEN det.id_detalhe_ocorrencia IN (90, 91, 93) THEN det.nm_detalhe_ocorrencia END) AS lado_esquerdo,
+			MAX(CASE WHEN det.id_detalhe_ocorrencia IN (134, 135, 136) THEN det.nm_detalhe_ocorrencia END) AS lado_direito
+		FROM 
+			tb_ocorrencia_log o
+			LEFT JOIN tb_tipo_ocorrencia tipo on tipo.id_tipo_ocorrencia = o.id_tipo_ocorrencia
+			LEFT JOIN tb_detalhe_ocorrencia det on det.id_detalhe_ocorrencia = o.id_detalhe_ocorrencia
+		WHERE
+			o.id_tipo_ocorrencia IN (79, 90)
+        GROUP BY 
+            o.id_log, o.id_tipo_ocorrencia
+        ) queryBuscarDadosEspalhados
+    GROUP BY id_log
+) queryMerge
+LEFT JOIN tb_log logs on queryMerge.id = logs.id_log
+LEFT JOIN tb_trecho trecho on trecho.id_trecho = logs.id_trecho

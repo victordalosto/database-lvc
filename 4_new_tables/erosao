@@ -20,21 +20,43 @@ CREATE INDEX index_erosao_km ON erosao USING btree (km ASC NULLS LAST);
 CREATE INDEX index_erosao_gps_y ON erosao USING btree (gps_y ASC NULLS LAST);
 CREATE INDEX index_erosao_gps_x ON erosao USING btree (gps_x ASC NULLS LAST);
 
+
 INSERT into erosao
 SELECT 
-    o.id_log,
-    'erosao' as nome,
-    null as condicao,
-	null lado,
+    id,
+    nome,
+    condicao,
+	lado,
 	logs.hodometro_trecho as km,
     trecho.desc_sentido as sentido,
     logs.gps_y, 
     logs.gps_x,
     trecho.nm_uf as uf,
     trecho.nm_br as br
-FROM tb_ocorrencia_log o
-LEFT JOIN tb_log logs on o.id_log = logs.id_log
+FROM 
+(
+    SELECT 
+        id_log id, 
+	    MAX(nome) AS nome, 
+	    MAX(condicao) AS condicao,
+	    MAX(lado) AS lado
+	FROM (
+		SELECT  
+			o.id_log id_log, 
+			'erosao' AS nome,
+			null AS condicao,
+			MAX(CASE WHEN det.id_detalhe_ocorrencia IN (125, 126, 127) THEN det.nm_detalhe_ocorrencia END) AS lado
+		FROM 
+			tb_ocorrencia_log o
+			LEFT JOIN tb_tipo_ocorrencia tipo on tipo.id_tipo_ocorrencia = o.id_tipo_ocorrencia
+			LEFT JOIN tb_detalhe_ocorrencia det on det.id_detalhe_ocorrencia = o.id_detalhe_ocorrencia
+		WHERE
+			o.id_tipo_ocorrencia IN (83)
+        GROUP BY 
+            o.id_log, o.id_tipo_ocorrencia
+        ) queryBuscarDadosEspalhados
+    GROUP BY id_log
+) queryMerge
+LEFT JOIN tb_log logs on queryMerge.id = logs.id_log
 LEFT JOIN tb_trecho trecho on trecho.id_trecho = logs.id_trecho
-WHERE 
-    o.id_tipo_ocorrencia = 83
 ;
