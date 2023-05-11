@@ -1,0 +1,40 @@
+DROP TABLE IF EXISTS intercessao;
+CREATE TABLE intercessao (
+	id integer primary key,
+	nome char(20),
+	condicao char(20),
+	lado char(20),
+	km integer,
+	sentido char(1),
+	gps_y double precision,
+	gps_x double precision,
+	uf char(2),
+	br char(3)
+);
+
+CREATE INDEX index_intercessao_id ON intercessao USING btree (id ASC NULLS LAST);
+CREATE INDEX index_intercessao_uf ON intercessao USING btree (uf ASC NULLS LAST);
+CREATE INDEX index_intercessao_br ON intercessao USING btree (br ASC NULLS LAST);
+CREATE INDEX index_intercessao_sentido ON intercessao USING btree (sentido ASC NULLS LAST);
+CREATE INDEX index_intercessao_km ON intercessao USING btree (km ASC NULLS LAST);
+CREATE INDEX index_intercessao_gps_y ON intercessao USING btree (gps_y ASC NULLS LAST);
+CREATE INDEX index_intercessao_gps_x ON intercessao USING btree (gps_x ASC NULLS LAST);
+
+INSERT into intercessao
+SELECT 
+    o.id_log,
+    'intercessao' as nome,
+    null as condicao,
+	null lado,
+	logs.hodometro_trecho as km,
+    trecho.desc_sentido as sentido,
+    logs.gps_y, 
+    logs.gps_x,
+    trecho.nm_uf as uf,
+    trecho.nm_br as br
+FROM tb_ocorrencia_log o
+LEFT JOIN tb_log logs on o.id_log = logs.id_log
+LEFT JOIN tb_trecho trecho on trecho.id_trecho = logs.id_trecho
+WHERE 
+    o.id_tipo_ocorrencia = 71
+;
