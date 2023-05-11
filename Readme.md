@@ -48,13 +48,9 @@ Criacao de um Modelo unico para tentar representar todas as marcacoes que são r
  ```json
  {
     "id": "integer",
-    "dados": [
-        {
-            "nome": "char(20)",
-            "condicao": "char(20)",
-            "lado": "char(20)"
-        }
-    ],
+    "nome": "char(20)",
+    "condicao": "char(20)",
+    "lado": "char(20)",
     "km": "integer",
     "sentido": "char(1)",
     "gps_y": "double precision",
@@ -63,4 +59,4 @@ Criacao de um Modelo unico para tentar representar todas as marcacoes que são r
     "br": "char(2)"
 }
 ```
- - As rotinas para a adaptação das marcações no banco para cada um desses modelos estão representados em <b>./3_create_tables/*</b>
+ - As rotinas para a adaptação das marcações no banco para cada um desses modelos estão representados em <b>./3_create_tables/*</b> e <b>./4_new_tables</b>

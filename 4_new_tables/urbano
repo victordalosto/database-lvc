@@ -1,0 +1,63 @@
+DROP TABLE IF EXISTS urbano;
+CREATE TABLE urbano (
+	id integer primary key,
+	nome char(20),
+	condicao char(20),
+	lado char(20),
+	km integer,
+	sentido char(1),
+	gps_y double precision,
+	gps_x double precision,
+	uf char(2),
+	br char(3)
+);
+
+CREATE INDEX index_urbano_id ON urbano USING btree (id ASC NULLS LAST);
+CREATE INDEX index_urbano_nome ON urbano USING btree (nome ASC NULLS LAST);
+CREATE INDEX index_urbano_condicao ON urbano USING btree (condicao ASC NULLS LAST);
+CREATE INDEX index_urbano_lado ON urbano USING btree (lado ASC NULLS LAST);
+CREATE INDEX index_urbano_uf ON urbano USING btree (uf ASC NULLS LAST);
+CREATE INDEX index_urbano_br ON urbano USING btree (br ASC NULLS LAST);
+CREATE INDEX index_urbano_sentido ON urbano USING btree (sentido ASC NULLS LAST);
+CREATE INDEX index_urbano_km ON urbano USING btree (km ASC NULLS LAST);
+CREATE INDEX index_urbano_gps_y ON urbano USING btree (gps_y ASC NULLS LAST);
+CREATE INDEX index_urbano_gps_x ON urbano USING btree (gps_x ASC NULLS LAST);
+
+INSERT into urbano
+SELECT 
+    id,
+    nome,
+    condicao,
+	lado,
+	logs.hodometro_trecho as km,
+    trecho.desc_sentido as sentido,
+    logs.gps_y, 
+    logs.gps_x,
+    trecho.nm_uf as uf,
+    trecho.nm_br as br
+FROM 
+(
+    SELECT 
+        id_log id, 
+	    MAX(nome) AS nome, 
+	    MAX(condicao) AS condicao,
+	    MAX(lado) AS lado
+	FROM (
+		SELECT  
+			o.id_log id_log, 
+			MAX(CASE WHEN det.id_detalhe_ocorrencia IN (94, 95) THEN det.nm_detalhe_ocorrencia END) AS nome,
+			MAX(CASE WHEN det.id_detalhe_ocorrencia IN (5, 6, 7, 8, 9, 98, 99, 100) THEN det.nm_detalhe_ocorrencia END) AS condicao,
+			null AS lado
+		FROM 
+			tb_ocorrencia_log o
+			LEFT JOIN tb_tipo_ocorrencia tipo on tipo.id_tipo_ocorrencia = o.id_tipo_ocorrencia
+			LEFT JOIN tb_detalhe_ocorrencia det on det.id_detalhe_ocorrencia = o.id_detalhe_ocorrencia
+		WHERE
+			o.id_tipo_ocorrencia IN (28, 80)
+        GROUP BY 
+            o.id_log, o.id_tipo_ocorrencia
+        ) queryBuscarDadosEspalhados
+    GROUP BY id_log
+) queryMerge
+LEFT JOIN tb_log logs on queryMerge.id = logs.id_log
+LEFT JOIN tb_trecho trecho on trecho.id_trecho = logs.id_trecho
