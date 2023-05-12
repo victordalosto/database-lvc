@@ -45,7 +45,7 @@ FROM
 	FROM (
 		SELECT  
 			o.id_log id_log, 
-			MAX(CASE WHEN det.id_detalhe_ocorrencia IN (32) THEN 'perimetro urbano' END) AS nome,
+			MAX(CASE WHEN det.id_tipo_ocorrencia IN (32) THEN 'perimetro urbano' END) AS nome,
 			MAX(CASE WHEN det.id_detalhe_ocorrencia IN (18, 19, 20) THEN det.nm_detalhe_ocorrencia END) AS condicao,
 			null AS lado
 		FROM 
